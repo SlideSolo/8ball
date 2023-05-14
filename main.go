@@ -29,6 +29,10 @@ type Update struct {
 	Message  Message `json:"message"`
 }
 
+func main() {
+	fmt.Println("service starting")
+}
+
 // Implements the fmt.String interface to get the representation of an Update as a string.
 func (u Update) String() string {
 	return fmt.Sprintf("(update id: %d, message: %s)", u.UpdateId, u.Message)
