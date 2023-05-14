@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"math/rand"
 	"net/http"
@@ -47,7 +47,7 @@ type Message struct {
 
 // Implements the fmt.String interface to get the representation of a Message as a string.
 func (m Message) String() string {
-	return fmt.Sprintf("(text: %s, chat: %s, audio %s)", m.Text, m.Chat)
+	return fmt.Sprintf("(text: %s, chat: %s)", m.Text, m.Chat)
 }
 
 // A Chat indicates the conversation to which the Message belongs.
@@ -114,7 +114,7 @@ func sendTextToTelegramChat(chatId int, text string) (string, error) {
 	}
 	defer response.Body.Close()
 
-	var bodyBytes, errRead = ioutil.ReadAll(response.Body)
+	var bodyBytes, errRead = io.ReadAll(response.Body)
 	if errRead != nil {
 		log.Printf("error in parsing telegram answer %s", errRead.Error())
 		return "", err
